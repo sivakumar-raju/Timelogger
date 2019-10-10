@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <nav class="navbar navbar-dark bg-dark">
+              <div class="navbar-nav">
+                <a class="nav-item nav-link active" href="#">Home <span class="sr-only"></span></a>
+                <a class="nav-item nav-link" href="timesheet.html" style="position: absolute;margin-left: 6rem;">Time Sheet</a>
+                <a class="nav-item nav-link" href="#" style="    position: absolute;margin-left: 14rem;">Attendance</a>
+              </div>
+          </nav>
+          <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    </head>
+    <form action="/form" method="POST" onsubmit="">
+    <body>
+
+        <div>
+        <h3 style="margin-top: 1rem;margin-bottom: 2rem; margin-left: 41rem;">Time Sheet Entry</h3>
+        <div class="container" id="some" style="text-align: center;">
+                <label for="Date"><b>Date</b></label>
+                <input type="date" name="date">
+                <label for="project"><b>Project</b></label>
+                <select id="drop">
+
+                </select>
+                <label for="hours"><b>Hours</b></label>
+                <input type="text" name="text">
+                <br>
+                    <label for="Comments"></label>
+                    <input type="text" name="commenttext" placeholder="   Comments" style="margin-top: 2rem;width: 36rem; height: 4rem;">
+                <br>
+            </div>
+            <div id="repeate-this" style="text-align: center; margin-top: 2rem;">
+
+            </div>
+            <div style="text-align: center;margin-top: 10px">
+               <span><button type="button" class="btn btn-primary" style="margin-left: 4rem;" onclick="addmore()">AddMore</button></span> 
+               <span><button type="button" class="btn btn-primary" style="margin-left: 19rem;">Submit</button></span> 
+            </div>
+              
+        
+        </div>
+    </form>
+        <script>
+            window.onload= () =>{
+              let dropdown=document.getElementById("drop");
+                let xhttp= new XMLHttpRequest();
+                xhttp.onreadystatechange= function(){
+                    if((this.readyState==4)&(this.status==200))
+                    {
+                        let json= JSON.parse(this.response);
+                        json.map(res=>{
+                            console.log(res);
+                        (drop.innerHTML += `<option>${res[0].project}</option>`)
+                        });
+                    }
+                }
+            }
+            var count=0
+            function addmore(){
+                 count+=1
+                 var a=` <div class="container" id=${count} style="text-align: center;">
+                <label for="Date"><b>Date</b></label>
+                <input type="date" name="date">
+                <label for="project"><b>Project</b></label>
+                <select id="drop">
+
+                </select>
+                <label for="hours"><b>Hours</b></label>
+                <input type="text" name="text">
+                <br>
+                    <label for="Comments"></label>
+                    <input type="text" name="commenttext" placeholder="   Comments" style="margin-top: 2rem;width: 36rem; height: 4rem;">
+                <br>
+            </div>`
+                 document.getElementById("repeate-this").innerHTML+= a+"<br/>"+"<button type='button' class='btn btn-warning' onclick='remove(count)'>Remove</button>"+"<br/><br/>";
+                
+                }
+
+            function remove(){
+                document.getElementById('repeate-this').removeChild ="";
+                console.log(count)            
+            }
+            
+            var xhttp= new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+          if ((this.readyState == 4) & (this.status == 200)) {
+            alert("success");
+          }
+        };
+        xhttp.open("POST","http://localhost:3000/data1",true);
+        xhttp.setRequestHeader("Content-Type","application/json;charset=UTF-8")
+        xhttp.send(JSON.stringify(data))
+           </script>
+           
+    </body>
+    
+</html>
